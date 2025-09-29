@@ -1,0 +1,74 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "C/C++: gcc.exe 生成活动文件 (GBK)",
+            "type": "cppbuild",
+            "command": "D:\\mingw64\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-fexec-charset=GBK",  // 关键参数：强制输出GBK编码
+                "-finput-charset=UTF-8", // 假设源文件是UTF-8
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": "build",
+            "detail": "编译器: D:\\mingw64\\bin\\gcc.exe (GBK输出)"
+        },
+        {
+            "label": "C/C++: g++.exe 生成活动文件 (UTF-8控制台)",
+            "type": "cppbuild",
+            "command": "D:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-fexec-charset=UTF-8",  // 输出UTF-8
+                "-finput-charset=UTF-8",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "&&",
+                "chcp", "65001", ">", "nul"  // 运行前切换控制台到UTF-8
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "编译器: D:\\mingw64\\bin\\g++.exe (UTF-8模式)"
+        },
+        {
+            "label": "C++ 生成并运行 (外部GBK控制台)",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "g++",
+                "-fexec-charset=GBK",
+                "-finput-charset=UTF-8",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "&&",
+                "start",
+                "cmd",
+                "/k",
+                "${fileBasenameNoExtension}.exe"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "group": "test"
+        }
+    ]
+}
