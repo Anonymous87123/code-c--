@@ -13,7 +13,7 @@ vector<int> multiply(vector<int> num, int multiplier) {
     while (carry) {
         num.push_back(carry % BASE);
         carry /= BASE;
-    }
+    }//数位前面幂次小，后面幂次大
     return num;
 }
 // 高精度加法（万进制）
@@ -22,8 +22,8 @@ vector<int> add(vector<int> a, vector<int> b) {
     long long carry = 0;
     int len = max(a.size(), b.size());
     for (int i = 0; i < len; i++) {
-        long long digitA = (i < a.size()) ? a[i] : 0;
-        long long digitB = (i < b.size()) ? b[i] : 0;
+        long long digitA = (i < a.size()) ? a[i] : 0;//多余高位补0
+        long long digitB = (i < b.size()) ? b[i] : 0;//多余高位补0
         long long sum = digitA + digitB + carry;
         result.push_back(sum % BASE);
         carry = sum / BASE;
