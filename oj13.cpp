@@ -5,13 +5,11 @@ int main() {
     cout << "请你想好一个 1～1000 之内的整数，别告诉我，让我来猜猜！" << endl;
     cout << "猜中了，请输入0；若猜的数小了，请输入-1；若猜的数大了，请输入1" << endl;
     cout << "开始猜了……" << endl;
-    
     int low = 1;
     int high = 1000;
     int count = 0;
     int guess;
     int feedback;
-    
     while (low <= high) {
         // 计算中间值作为猜测（使用整数除法）
         guess = (low + high-1) / 2;

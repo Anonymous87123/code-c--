@@ -1,13 +1,40 @@
 #include<iostream>
 using namespace std;
-int main()
+bool is_prime(int n)
 {
-    int sum=0;int a;cin>>a;
+    if(n<=1) return false;
+    for(int i=2;i*i<=n;i++)
+    {
+        if(n%i==0) return false;
+    }
+    return true;
+}
+int add(int a)
+{
+    int sum=0;
     while(a>0)
     {
         sum+=a%10;
         a/=10;
     }
-    cout<<sum<<endl;
     return sum;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int a[2*n];int count[n]={0};
+    for(int i=0;i<2*n;i+=2)
+    {
+        cin>>a[i]>>a[i+1];
+    }
+    for(int j=0;j<2*n;j+=2)
+    {
+    for(int k=a[j];k<=a[j+1];k++)
+    {
+        if(is_prime(add(k))==true&&is_prime(k)==true)count[(j/2)]++;
+    }}
+    for(int m=0;m<2*n;m+=2)
+    {cout<<"Case #"<<m/2+1<<": "<<count[(m/2)]<<endl;}
+    return 0;
 }
