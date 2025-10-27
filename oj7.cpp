@@ -2,6 +2,8 @@
 using namespace std;
 int main()
 {
-    int i,j,x=0;
-    for(i=0;i<=3;i++){x++;}
+    int i=0,j=5;
+    do{i++;j--;
+    if(i>3)break;}while(j>0);
+    cout<<"i= "<<i<<endl<<"j= "<<j<<endl;
 }
