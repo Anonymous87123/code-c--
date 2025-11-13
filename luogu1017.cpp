@@ -3,7 +3,6 @@ using namespace std;
 int n, base; // n: 十进制数, m: 目标进制基数（可以是负数）
 char a[100001]; // 存储转换结果的字符数组
 int l = 0; // 结果数组的长度
-
 int main() {
     int i;
     cin >> n >> base; // 输入十进制数和目标进制基数

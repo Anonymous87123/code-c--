@@ -26,14 +26,12 @@ int main() {
     while (cin >> n >> m) {
         // 重置状态变量
         count = 0;
-        result = 0;
-        
+        result = 0; 
         // 从1-9开始生成（避免前导零）
         for (int i = 1; i <= 9; i++) {
             if (result != 0) break; // 已找到结果
             search(i, 1);
-        }
-        
+        }       
         cout << result << endl;
     }
     return 0;
