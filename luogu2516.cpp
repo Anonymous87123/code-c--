@@ -1,63 +1,82 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+
 using namespace std;
-const int MOD = 1e8;
-const int N = 5005;
-int dp[2][N]; // 最长公共子序列长度
-int cnt[2][N]; // 方案数
-char s1[N], s2[N];
+
+const int MOD = 100000000;  // 取模值
+const int MAXN = 5005;      // 最大长度
+
 int main() {
-    string s1, s2;
-    getline(cin, s1);
-    getline(cin, s2);
+    // 读取字符串
+    string str1, str2;
+    cin >> str1 >> str2;
+    
     // 去掉末尾的'.'
-    s1 = s1.substr(0, s1.find('.'));
-    s2 = s2.substr(0, s2.find('.'));
-    int n = s1.length();
-    int m = s2.length();
-    // 初始化
-    for (int j = 0; j <= m; j++) {
-        cnt[0][j] = 1;
+    int n = str1.size() - 1;  // 第一个字符串有效长度
+    int m = str2.size() - 1;  // 第二个字符串有效长度
+    
+    // 创建滚动数组
+    // len1: 上一行的LCS长度
+    // len2: 当前行的LCS长度
+    // cnt1: 上一行的LCS方案数
+    // cnt2: 当前行的LCS方案数
+    vector<int> len1(MAXN, 0), len2(MAXN, 0);
+    vector<int> cnt1(MAXN, 0), cnt2(MAXN, 0);
+    
+    // 初始化：空串与任何串的LCS长度为0，方案数为1
+    for (int j = 0; j <= m; ++j) {
+        cnt1[j] = 1;
     }
-    cnt[1][0] = 1;
-    int now = 1, pre = 0;  // 滚动数组指针
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            dp[now][j] = max(dp[pre][j], dp[now][j-1]);
-            cnt[now][j] = 0;  // 方案数从0开始累加
-            // 如果当前字符相等
-            if (s1[i] == s2[j]) {
-                dp[now][j] = max(dp[now][j], dp[pre][j-1] + 1);
-                if (dp[now][j] == dp[pre][j-1] + 1) {
-                    cnt[now][j] = (cnt[now][j] + cnt[pre][j-1]) % MOD;
-                }
+    cnt2[0] = 1;  // 每行第一个位置初始化为1
+    
+    // 动态规划
+    for (int i = 1; i <= n; ++i) {
+        // 清空当前行
+        fill(len2.begin() + 1, len2.begin() + m + 1, 0);
+        fill(cnt2.begin() + 1, cnt2.begin() + m + 1, 0);
+        for (int j = 1; j <= m; ++j) {
+            // 情况1：当前字符匹配
+            if (str1[i - 1] == str2[j - 1]) {
+                len2[j] = len1[j - 1] + 1;        // 从左上角转移
+                cnt2[j] = cnt1[j - 1] % MOD;      // 方案数从左上角继承
+            }
+            // 情况2：从上边转移
+            if (len1[j] > len2[j]) {
+                // 上边长度更大，用上边的
+                len2[j] = len1[j];
+                cnt2[j] = cnt1[j] % MOD;
+            } else if (len1[j] == len2[j]) {
+                // 长度相等，合并方案数
+                cnt2[j] = (cnt2[j] + cnt1[j]) % MOD;
+            }
+            // 情况3：从左边转移
+            if (len2[j - 1] > len2[j]) {
+                // 左边长度更大，用左边的
+                len2[j] = len2[j - 1];
+                cnt2[j] = cnt2[j - 1] % MOD;
+            } else if (len2[j - 1] == len2[j]) {
+                // 长度相等，合并方案数
+                cnt2[j] = (cnt2[j] + cnt2[j - 1]) % MOD;
             }
             
-            // 从上方转移
-            if (dp[now][j] == dp[pre][j]) {
-                cnt[now][j] = (cnt[now][j] + cnt[pre][j]) % MOD;
-            }
-            
-            // 从左方转移
-            if (dp[now][j] == dp[now][j-1]) {
-                cnt[now][j] = (cnt[now][j] + cnt[now][j-1]) % MOD;
-            }
-            
-            // 去重：如果左上角的长度等于当前长度，说明上方和左方的转移都包含了左上角的方案
-            if (s1[i] != s2[j] && dp[pre][j-1] == dp[now][j]) {
-                cnt[now][j] = (cnt[now][j] - cnt[pre][j-1] + MOD) % MOD;
+            // 情况4：去重（当字符不匹配且三个方向来源长度相同时）
+            if (str1[i - 1] != str2[j - 1] && len1[j - 1] == len2[j]) {
+                // 减去重复计算的部分
+                cnt2[j] = (cnt2[j] - cnt1[j - 1] + MOD) % MOD;
             }
         }
         
-        // 滚动数组交换
-        swap(now, pre);
-        
-        // 重新初始化当前行的第0列
-        cnt[now][0] = 1;
+        // 滚动数组：交换当前行和上一行
+        swap(len1, len2);
+        swap(cnt1, cnt2);
     }
     
-    // 最终结果在pre行（因为最后一次交换后，pre指向的是最终结果）
-    cout << dp[pre][m] << endl;
-    cout << cnt[pre][m] % MOD << endl;
+    // 输出结果
+    cout << len1[m] << endl;      // 最长公共子序列长度
+    cout << cnt1[m] % MOD << endl; // 最长公共子序列个数
     
     return 0;
 }
