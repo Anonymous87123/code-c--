@@ -28,14 +28,15 @@ void countGender(Employee* head) {
     int male = 0, female = 0;
     Employee* current = head;
     while (current != nullptr) {
-        if (current->gender == 'M') {
+        if (current->gender == 'M') 
+        {
             male++;
-        } else {
+        } else 
+        {
             female++;
         }
         current = current->next;
-    }
-    
+    }  
     cout << male << " " << female << endl;
 }
 Employee* deleteById(Employee* head, int id, Employee* &tail) {
