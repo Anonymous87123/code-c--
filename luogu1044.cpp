@@ -1,9 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
-using int = long long;
-int main()
+#define int long long
+int f(int n)
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int n,m;
+    if(n==1)return 1;
+    else return (4*n-2)*f(n-1)/(n+1);
+}
+main()
+{
+    int n;
+    cin>>n;
+    cout<<f(n)<<endl;
 }
