@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-enum Direction { UP, RIGHT, DOWN, LEFT };
 int seed = 0;
-int getramdom() {
+int getRandom() {
     seed = (25173 * seed + 13849) % 65536;
     return seed;
 }
@@ -12,7 +11,7 @@ vector<vector<char>> mazeGenerator(int M, int N) {
     maze[M-1][N-2] = '.';
     for (int i = 1; i < M - 1; i++) {
         for (int j = 1; j < N - 1; j++) {
-            int r = getramdom();
+            int r = getRandom();
             if (r < 40000) {
                 maze[i][j] = '.';
             }
@@ -20,7 +19,7 @@ vector<vector<char>> mazeGenerator(int M, int N) {
     }
     return maze;
 }
-void printMaze(const vector<vector<char>>& maze, int step, bool isForward) {
+void print(const vector<vector<char>>& maze, int step, bool isForward) {
     cout << (isForward ? "前进-" : "回退-") << "步骤" << step << "：" << endl;
     for (int i = 0; i < maze.size(); i++) {
         for (int j = 0; j < maze[i].size(); j++) {
@@ -30,22 +29,22 @@ void printMaze(const vector<vector<char>>& maze, int step, bool isForward) {
     }
     cout << endl;
 }
-Direction turnRight(Direction dir) {
-    return static_cast<Direction>((dir + 1) % 4);
+int turnright(int dir) {
+    return (dir + 1) % 4;
 }
-Direction turnLeft(Direction dir) {
-    return static_cast<Direction>((dir + 3) % 4);
+int turnleft(int dir) {
+    return (dir + 3) % 4;
 }
-Direction turnBack(Direction dir) {
-    return static_cast<Direction>((dir + 2) % 4);
+int turnback(int dir) {
+    return (dir + 2) % 4;
 }
-bool getNextPos(int& x, int& y, Direction dir, int M, int N) {
+bool get(int& x, int& y, int dir, int M, int N) {
     int newx = x, newy = y;
     switch (dir) {
-        case UP: newx = x - 1; break;
-        case RIGHT: newy = y + 1; break;
-        case DOWN: newx = x + 1; break;
-        case LEFT: newy = y - 1; break;
+        case 0: newx = x - 1; break;
+        case 1: newy = y + 1; break;
+        case 2: newx = x + 1; break;
+        case 3: newy = y - 1; break;
     }
     if (newx < 0 || newx >= M || newy < 0 || newy >= N) {
         return false;
@@ -54,26 +53,26 @@ bool getNextPos(int& x, int& y, Direction dir, int M, int N) {
     y = newy;
     return true;
 }
-bool mazeTraverse(vector<vector<char>>& maze, int x, int y, int M, int N, Direction dir, int& step, bool& found) {
+bool mazeTraverse(vector<vector<char>>& maze, int x, int y, int M, int N, int dir, int& step, bool& found) {
     if (x == M-1 && y == N-2) {
         maze[x][y] = 'X';
-        printMaze(maze, step++, true);
+        print(maze, step++, true);
         found = true;
         return true;
     }
     if (maze[x][y] == '.') {
         maze[x][y] = 'X';
-        printMaze(maze, step++, true);
+        print(maze, step++, true);
     }
     int curx = x, cury = y;
-    Direction directions[4];
-    directions[0] = turnRight(dir);
+    int directions[4];
+    directions[0] = turnright(dir);
     directions[1] = dir;
-    directions[2] = turnLeft(dir);
-    directions[3] = turnBack(dir);
+    directions[2] = turnleft(dir);
+    directions[3] = turnback(dir);
     for (int i = 0; i < 4; i++) {
         int newx = curx, newy = cury;
-        if (getNextPos(newx, newy, directions[i], M, N)) {
+        if (get(newx, newy, directions[i], M, N)) {
             if (maze[newx][newy] == '.') {
                 bool result = mazeTraverse(maze, newx, newy, M, N, directions[i], step, found);
                 if (found) {
@@ -84,8 +83,9 @@ bool mazeTraverse(vector<vector<char>>& maze, int x, int y, int M, int N, Direct
     }
     if (maze[curx][cury] == 'X') {
         maze[curx][cury] = '.';
-        printMaze(maze, step++, false);
+        print(maze, step++, false);
     }
+    
     return false;
 }
 int main() {
@@ -95,11 +95,13 @@ int main() {
         vector<vector<char>> maze = mazeGenerator(M, N);
         int step = 1;
         bool found = false;
-        mazeTraverse(maze, 0, 1, M, N, DOWN, step, found);
+        mazeTraverse(maze, 0, 1, M, N, 2, step, found);
+        
         if (found) {
             cout << "成功走出迷宫" << endl;
         } else {
             cout << "回退到入口" << endl;
         }
     }
+    return 0;
 }

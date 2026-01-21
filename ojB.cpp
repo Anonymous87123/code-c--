@@ -1,29 +1,18 @@
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
-int cmp(vector<int>&a,vector<int>&b)
-{
-    for(int i=a.size()-1;i>=0;--i)
-    {
+int cmp(vector<int>&a,vector<int>&b){
+    for(int i=a.size()-1;i>=0;--i){
         if(a[i]>b[i])return 1;
         else if(a[i]<b[i])return -1;
     }
     return 0;
 }
-vector<int>add(vector<int>&a,vector<int>&b)
-{
-    int n=max(a.size(),b.size())+1;
-    a.resize(n,0);
-    b.resize(n,0);
+vector<int>add(vector<int>&a,vector<int>&b){
     vector<int>result(n,0);
-    for(int i=0;i<n;i++)
-    {
-        result[i]=a[i]+b[i];
-    }
-    for(int i=0;i<n;i++)
-    {
-        if(result[i]>=10)
-        {
+    for(int i=0;i<n;i++)result[i]=a[i]+b[i];
+    for(int i=0;i<n;i++){
+        if(result[i]>=10){
             temp=result[i]/10;
             result[i+1]+=temp;
             result[i]%=10;
@@ -32,28 +21,14 @@ vector<int>add(vector<int>&a,vector<int>&b)
     while(result.size()>1&&result.back()==0)result.pop_back();
     return result;
 }
-vector<int>sub(vector<int>&a,vector<int>&b)//a>b
-{
-    int n=max(a.size(),b.size())+1;
-    a.resize(n,0);
-    b.resize(n,0);
+vector<int>sub(vector<int>&a,vector<int>&b){//a>b默认
     vector<int>result(n,0);
-    if(cmp(a,b)==0)
-    {
-        return 0;
-    }
-    else
-    {
-        for(int i=0;i<n;i++)
-        {
-            result[i]=a[i]-b[i];
-        }
-        for(int i=0;i<n;i++)
-        {
-            while(result[i]<0)
-            {
-                result[i]+=10;
-                result[i+1]--;
+    if(cmp(a,b)==0)return 0;
+    else{
+        for(int i=0;i<n;i++)result[i]=a[i]-b[i];
+        for(int i=0;i<n;i++){
+            while(result[i]<0){
+                result[i]+=10;result[i+1]--;
             }
         }
     }
@@ -72,7 +47,7 @@ void print(vector<int>&result)//此时result已经是倒过来的
     reverse(res.begin(),res.end());
     cout<<res<<endl;
 }
-main()
+signed main()
 {
     string s1,s2,op;
     cin>>s1>>op>>s2;
