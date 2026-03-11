@@ -1,0 +1,120 @@
+\documentclass[UTF8,12pt]{ctexart}
+\usepackage{amsmath,amssymb,geometry,graphicx}
+\usepackage{amsthm} % 添加定理环境支持
+
+% 页面设置
+\geometry{a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+% 定理样式定义
+\theoremstyle{plain} % 普通定理（斜体）
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}{引理}[section]
+\newtheorem{proposition}{命题}[section]
+
+\theoremstyle{definition} % 定义样式（正体）
+\newtheorem{definition}{定义}[section]
+\newtheorem{example}{例}[section] % 例题带编号
+
+\theoremstyle{remark} % 备注样式（可选）
+\newtheorem*{remark}{注}
+
+\title{调和点列与极点极线}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{交比与调和点列}
+\subsection{调和分割的概念}
+
+\begin{definition}[线束和点列的交比]
+如图，过点 $O$ 的四条直线被任意直线 $l$ 所截的有向线段之比 
+\[\dfrac{\overrightarrow{AC}}{\overrightarrow{AD}} \Big/ \dfrac{\overrightarrow{BC}}{\overrightarrow{BD}}\]
+称为线束 $OA, OC, OB, OD$ 或点列 $A, C, B, D$ 的交比。
+\end{definition}
+
+\begin{theorem}
+交比与所截直线无关。
+\end{theorem}
+\begin{proof}
+令线束 $O(a,b,c,d)$ 分别交 $l$ 于 $A,B,C,D$，则
+\[\frac{AC}{AD} \Big/ \frac{BC}{BD} = 
+\frac{S_{\triangle AOC}}{S_{\triangle AOD}} \Big/ \frac{S_{\triangle BOC}}{S_{\triangle BOD}}
+= \frac{CO\sin\angle AOC}{DO\sin\angle AOD} \Big/ \frac{CO\sin\angle COB}{DO\sin\angle BOD}
+= \frac{\sin\angle AOC}{\sin\angle AOD} \cdot \frac{\sin\angle COB}{\sin\angle BOD}\]
+故交比与所截直线无关。
+\end{proof}
+
+\begin{definition}[调和点列与调和线束]
+若交比为 $-1$，则称为调和，交比为 $-1$ 的线束称为调和线束，点列称为调和点。一般地，若 $\dfrac{AC}{CB} = \lambda \dfrac{AD}{DB}$ ($\lambda > 0$ 且 $\lambda \neq 1$)，则 $A,C,B,D$ 四点构成“调和点列”；
+\begin{itemize}
+\item $A,B$ 叫做“基点”，$C,D$ 叫做“（内、外）分点”。于是根据定义可得：如果点 $C$ 内分线段 $AB$，点 $D$ 外分线段 $AB$，且 $\dfrac{AC}{CB} = \dfrac{AD}{DB}$，那么称点 $C,D$ 调和分割线段 $AB$，亦称 $A,C,B,D$ 为调和点列。线段端点和内外分点，依次构成调和点列。即：调和点列 $\Leftrightarrow$ 内分比 $=$ 外分比。
+\item 也可以以 $D,C$ 为基点，则四点 $D,B,C,A$ 仍构成调和点列，故称 $A,B$ 与 $C,D$ 调和共轭。
+\end{itemize}
+\end{definition}
+
+调和点列具有以下性质：
+\begin{itemize}
+\item (1) 调和性：$\dfrac{1}{|AC|} + \dfrac{1}{|AD|} = \dfrac{2}{|AB|}$
+\item (2) 共轭性：若 $A,C,B,D$ 构成调和点列，则 $D,B,C,A$ 也构成调和点列。
+\item (3) 等比性：$\dfrac{|CA|}{|CB|} = \dfrac{|DA|}{|DB|} = \lambda$；记线段 $AB$ 的中点为 $M$，则有 $|MA|^2 = |MB|^2 = |MC| \cdot |MD|$。
+\end{itemize}
+
+\begin{theorem}
+斜率分别为 $k_1, k_2, k_3$ 的三条直线 $l_1, l_2, l_3$ 交于 $x$ 轴外的点 $P$，过 $P$ 作 $x$ 轴的垂线 $l_4$，则 $k_1, k_2, k_3$ 成等差数列的充要条件为 $l_1, l_2, l_3, l_4$ 成调和线束。
+\end{theorem}
+分析：不妨设 $k_1, k_2, k_3$ 均为正数，其它情况同理可证。
+
+\begin{theorem}
+已知 $F$ 为椭圆的焦点，$l$ 为 $F$ 相应的准线，过 $F$ 任作一直线交椭圆于 $A, B$ 两点，交 $l$ 于点 $M$，则 $A, B, F, M$ 成调和点列。
+\end{theorem}
+
+\begin{definition}[阿波罗尼斯圆]
+到两定点 $A$、$B$ 距离之比为定值 $k$ ($k>0$ 且 $k \neq 1$) 的点的轨迹为圆，称为 Apollonius 圆（简称阿氏圆），为古希腊数学家 Apollonius 最先提出并解决。
+\end{definition}
+
+\begin{definition}[完全四边形]
+我们把两两相交，且没有三线共点的四条直线及它们的六个交点所构成的图形，叫做完全四边形。如图，凸四边形 $ABCD$ 各边延长交成的图形称为完全四边形 $ABCDEF$，$AC$、$BD$、$EF$ 称为其对角线。
+\end{definition}
+
+\begin{theorem}
+完全四边形对角线所在直线互相调和分割。即 $AGCH$、$BGDI$、$EHFI$ 分别构成调和点列。
+\end{theorem}
+
+\section{极点与极线}
+\subsection{极点和极线的几何定义}
+如图，$P$ 为不在圆锥曲线 $\Gamma$ 上的点，过点 $P$ 引两条割线依次交圆锥曲线于四点 $E,F,G,H$，连接 $EH,FG$ 交于 $N$，连接 $EG,FH$ 交于 $M$，我们称点 $P$ 为直线 $MN$ 关于圆锥曲线 $\Gamma$ 的极点，称直线 $MN$ 为点 $P$ 关于圆锥曲线 $\Gamma$ 的极线。直线 $MN$ 交圆锥曲线 $\Gamma$ 于 $A,B$ 两点，则 $PA,PB$ 为圆锥曲线 $\Gamma$ 的两条切线。若 $P$ 在圆锥曲线 $\Gamma$ 上，则过点 $P$ 的切线即为极线。
+
+\begin{lemma}
+已知椭圆方程为 $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ ($a > b > 0$)，直线 $l$ 的方程为 $\frac{x_0 x}{a^2} + \frac{y_0 y}{b^2} = 1$，点 $P(x_0, y_0)$ 不与原点重合。过点 $P$ 作直线交椭圆于 $A, B$ 两点，$M$ 点在直线 $AB$ 上，则“点 $M$ 在直线 $l$ 上”的充要条件是 $P, M$ 调和分割 $A, B$，即 $\frac{AP}{PB} = \frac{AM}{MB}$。
+\end{lemma}
+
+\begin{proposition}[配极原则]
+若 $P$ 点关于圆锥曲线 $\Gamma$ 的极线通过另一点 $Q$，则 $Q$ 点的极线也通过 $P$，称 $P$、$Q$ 关于 $\Gamma$ 调和共轭。
+\end{proposition}
+
+如下图，设四边形 $ABCD$ 为椭圆的内接梯形，$AC \parallel BD$，$AD \cap BC = Q$，则点 $P$ 的极线过 $Q$，且与直线 $AC$、$BD$ 平行。特别地，若 $BC \parallel AD \parallel y$ 轴时，点 $P$ 的极线平行 $y$ 轴，且与 $x$ 轴的交点 $R$ 也是 $AC$、$BD$ 交点，有 $|OR| \cdot |OP| = |OF|^2 = a^2$。
+
+\section{经典例题}
+% 设置例的编号从5开始（假设前面有4个例题）
+\setcounter{example}{4}
+\begin{example}
+已知 $A,B$ 分别为椭圆 $E:\dfrac{y^{2}}{a^{2}}+y^{2}=1$ ($a>1$) 的左、右顶点，$G$ 为 $E$ 的上顶点，$\overrightarrow{AG}\cdot\overrightarrow{GB}=8$，$P$ 为直线 $x=6$ 上的动点，$PA$ 与 $E$ 的另一交点为 $C$，$PB$ 与 $E$ 的另一交点为 $D$。
+\end{example}
+
+\begin{example}
+给定椭圆 \( C: \dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1 \ (a > b > 0) \)，称圆心在原点 \( O \)，半径为 \( \sqrt{a^2 + b^2} \) 的圆是椭圆 \( C \) 的“准圆”。若椭圆 \( C \) 的一个焦点为 \( F(\sqrt{2}, 0) \)，其短轴上的一个端点到点 \( F \) 的距离为 \( \sqrt{3} \)。\\
+(1) 求椭圆 \( C \) 的方程和其“准圆”方程；
+(2) 点 \( P \) 是椭圆 \( C \) 的“准圆”上的动点，过点 \( P \) 作椭圆的切线 \( l_1, l_2 \) 交“准圆”于点 \( M, N \)。\\
+\qquad (i) 当点 \( P \) 为“准圆”与 \( y \) 轴正半轴的交点时，求直线 \( l_1, l_2 \) 的方程并证明 \( l_1 \perp l_2 \)；\\
+\qquad (ii)求证: \( |MN| \) 为定值。
+\end{example}
+
+\section{总结}
+调和点列与极点极线虽然是高等几何中的内容，高中数学教材中虽然没有介绍相关的定义和性质，但是以此为背景的高考和竞赛题层出不穷。
+
+当我们用其他方法解决本题时，也可以用调和点列极点极线的性质更深刻地理解题目，当目标已然心里有数时，便能加快运算速度，降低运算难度，并避免计算错误了！
+
+\end{document}

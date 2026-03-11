@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
-int cmp(vector<int>&a,vector<int>&b){
+int cmp(vector<int>&a,vector<int>&b){//传倒过来的
     for(int i=a.size()-1;i>=0;--i){
         if(a[i]>b[i])return 1;
         else if(a[i]<b[i])return -1;
@@ -9,26 +9,28 @@ int cmp(vector<int>&a,vector<int>&b){
     return 0;
 }
 vector<int>add(vector<int>&a,vector<int>&b){
-    int n=max(a.size(),b.size())+1;//0到n
+    int n=max(a.size(),b.size())+3;//0到n
     vector<int>result(n,0);
+    a.resize(n,0);b.resize(n,0);
     for(int i=0;i<n;i++)result[i]=a[i]+b[i];
-    for(int i=0;i<n;i++){
-        if(result[i]>=10){
-            int temp=result[i]/10;
-            result[i+1]+=temp;
-            result[i]%=10;
+    for(int i=0;i<n-1;i++){
+        while(result[i]>=10){
+            result[i]-=10;result[i+1]++;
         }
     }
     while(result.size()>1&&result.back()==0)result.pop_back();
     return result;
 }
 vector<int>sub(vector<int>&a,vector<int>&b){//a>b默认
-    int n=max(a.size(),b.size())+1;//0到n
+    int n=max(a.size(),b.size())+3;//0到n
+    a.resize(n,0);b.resize(n,0);
     vector<int>result(n,0);
-    if(cmp(a,b)==0)return result;
-    else{
+    if(cmp(a,b)==0){
+        while(result.size()>1&&result.back()==0)result.pop_back();
+        return result;
+    }else{
         for(int i=0;i<n;i++)result[i]=a[i]-b[i];
-        for(int i=0;i<n;i++){
+        for(int i=0;i<n-1;i++){
             while(result[i]<0){
                 result[i]+=10;result[i+1]--;
             }
@@ -37,20 +39,29 @@ vector<int>sub(vector<int>&a,vector<int>&b){//a>b默认
     while(result.size()>1&&result.back()==0)result.pop_back();
     return result;
 }
-void print(vector<int>&result){//此时result已经是倒过来的
-    string res="";
-    for(int i=0;i<result.size();i++){
-        res+=to_string(result[i]);
-        if((i+1)%3==0)res+=",";
+void print(vector<int>& result) { // 此时result已经是倒过来的
+    while (result.size() > 1 && result.back() == 0) result.pop_back();
+    string res = "";
+    for (int i = 0; i <= result.size() - 1; ++i) {
+        if (result[i] == 0) res += "0";
+        else if (result[i] == 1) res += "1";
+        else if (result[i] == 2) res += "2";
+        else if (result[i] == 3) res += "3";
+        else if (result[i] == 4) res += "4";
+        else if (result[i] == 5) res += "5";
+        else if (result[i] == 6) res += "6";
+        else if (result[i] == 7) res += "7";
+        else if (result[i] == 8) res += "8";
+        else if (result[i] == 9) res += "9";
+        if (i != result.size() - 1 && (i + 1) % 3 == 0) res += ",";
     }
-    reverse(res.begin(),res.end());
-    cout<<res<<endl;
+    for (int i = res.size() - 1; i >= 0; --i) cout << res[i];
+    cout << endl;
 }
 signed main(){
     string s1,s2,op;
-    cin>>s1>>op>>s2;
+    while(cin>>s1>>op>>s2){
     vector<int>num1;vector<int>num2;
-    int count=0;
     bool neg1=false,neg2=false;
     for(int i=s1.size()-1;i>=0;i--)//倒过来
     {
@@ -84,8 +95,7 @@ signed main(){
     }
     int n=max(num1.size(),num2.size())+1;//0到n
     num1.resize(n,0);num2.resize(n,0);
-    vector<int>result(n,0);
-    if(op=='+'){
+    if(op=="+"){
         if(neg1==true&&neg2==true){//都为负数
             vector<int>res=add(num1,num2);
             cout<<'-';print(res);
@@ -111,7 +121,7 @@ signed main(){
             vector<int>res=add(num1,num2);
             print(res);
         }
-    }else if(op=='-'){
+    }else if(op=="-"){
         if(neg1==true&&neg2==true){//都为负数
             if(cmp(num1,num2)==0)cout<<0<<endl;
             else if(cmp(num1,num2)==1){//|a|>|b|
@@ -137,9 +147,6 @@ signed main(){
                 cout<<'-';print(res);
             }
         }
-    }
+    }}
 
 }
-
-
-
