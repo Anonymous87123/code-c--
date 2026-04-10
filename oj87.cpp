@@ -1,9 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 class FilePath {
-private:
-    string path;
 public:
+    string path;
     FilePath(string p) : path(p) {}
     string simplifyPath() {
         vector<string> stk;
