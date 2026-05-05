@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmake --version)",
+      "Bash(g++ --version)",
+      "Bash(g++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/app/main.cpp src/common/Logger.cpp src/model/Student.cpp src/model/Teacher.cpp src/model/UserAccount.cpp src/model/Course.cpp src/model/Score.cpp -o edusys.exe)",
+      "Bash(./edusys.exe)",
+      "Bash(cmake --build build --config Release)",
+      "Bash(./build/Release/edusys.exe)",
+      "Bash(./build/Release/edusys.exe --self-test)",
+      "Bash(tee demo_output.txt)",
+      "Bash(./build.bat)",
+      "Bash(./edusys.exe --self-test)",
+      "Bash(cmd //c tools\\\\\\\\corrupt_check.bat)",
+      "Bash(cmd /c \"tools\\\\corrupt_check.bat\")",
+      "Bash(./tools/corrupt_check.bat)",
+      "Bash(awk '/^```mermaid/,/^```$/' claude.md)"
+    ]
+  }
+}

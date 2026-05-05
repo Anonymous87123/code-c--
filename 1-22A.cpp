@@ -1,21 +1,29 @@
 #include<bits/stdc++.h>
-#define int long long
 using namespace std;
-signed main(){
-    ios::sync_with_stdio(false);cin.tie(0);
-    int n;string s;cin>>n>>s;
-    string rev=s;
-    reverse(rev.begin(),rev.end());
-    string t=rev+"#"+s;
-    int m=t.size();
-    vector<int> pi(m,0);
-    for (int i=1;i<m;++i) {
-        int j=pi[i-1];
-        while (j>0&&t[i]!=t[j])j=pi[j-1];
-        if (t[i] == t[j])++j;
-        pi[i] = j;
+int main(){
+    string s1,s2;
+    while(getline(cin,s1) && getline(cin,s2)){
+        vector<string> a;
+        for(int i=0;i<s1.size();i+=8){
+            string temp="";
+            temp+=s1[i];temp+=s1[i+1];
+            temp+=s1[i+2];temp+=s1[i+3];
+            temp+=s1[i+4];temp+=s1[i+5];
+            temp+=s1[i+6];temp+=s1[i+7];
+            a.push_back(temp);
+        }
+        for(int i=0;i<s2.size();i+=8){
+            string temp="";
+            temp+=s2[i];temp+=s2[i+1];
+            temp+=s2[i+2];temp+=s2[i+3];
+            temp+=s2[i+4];temp+=s2[i+5];
+            temp+=s2[i+6];temp+=s2[i+7];
+            a.push_back(temp);
+        }     
+        sort(a.begin(),a.end(),[](string a,string b){return a<b;});
+        for(string s:a){
+            cout<<s;
+        }
+        cout<<endl;
     }
-    int L = pi[m - 1];
-    cout << n - L << endl;
-    return 0;
 }
